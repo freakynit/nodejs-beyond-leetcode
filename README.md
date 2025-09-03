@@ -1,0 +1,245 @@
+# Real-World Node.js Interview Questions
+
+A collection of **interview questions** designed to test **practical, real-world engineering skills** in Node.js and JavaScript.
+
+These aren’t algorithm drills or textbook trivia - they’re based on challenges that actually show up when building and scaling systems.
+
+---
+
+## Examples
+
+- Ensure only one request at a time is processed per email address in an Express app.  
+- What happens if a producer writes to a stream faster than the consumer can read?  
+- How can the event loop appear "frozen" without an infinite loop?  
+- Implement a safe substitution mechanism for dynamic template strings.  
+- Enforce concurrency limits when running 1000 async tasks.  
+
+---
+
+## Why this repo?
+
+Most interview prep focuses on either:
+- Basic trivia ("what does `this` mean here?"), or  
+- Algorithm puzzles you’ll never implement again in your career.  
+
+This repo is different: it focuses on **scenarios that represent real-world problems, free from tutorial-level knowledge**.
+
+---
+
+## Contributing
+
+If you’ve hit a tricky Node.js bug or design challenge in production, turn it into a question!  
+PRs welcome for:
+- New unique questions  
+- Improved clarity/explanations  
+- Code examples illustrating solutions  
+
+---
+
+## License
+The content of this repository is released under an open-source license. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Questions
+
+### Per-Email Request Serialization in Express
+
+In a Node.js application using Express, imagine you have an endpoint that accepts POST requests with an `email` field in the request body.
+
+How would you design the request handler so that **only one request at a time is processed for a given email address**, while still allowing requests for different emails to be processed concurrently?
+
+What considerations would you keep in mind if the service is scaled across multiple Node.js instances?
+
+---
+
+## Implementing a Mutex in Node.js with async/await
+
+In JavaScript (Node.js), multiple asynchronous tasks may try to access and modify the same shared resource concurrently. How would you implement a simple mutex (mutual exclusion lock) in Node.js using `async/await` so that only one task can enter a critical section at a time?
+
+**Note:** 
+- The JavaScript execution thread (event loop) is single-threaded, so two pieces of JS code can’t literally run at the same time on different threads.
+- But Node.js is asynchronous. Multiple async operations (e.g. I/O, DB queries, timers, worker threads, cluster processes) can complete at unpredictable times, and their callbacks may interleave in ways that still require synchronization at the application level.
+
+---
+
+### Race Conditions in a Single-Threaded Node.js Environment
+
+JavaScript in Node.js runs on a single thread, but asynchronous operations can still cause unexpected behavior. Can you explain how race conditions can occur in a single-threaded environment like Node.js, and demonstrate with a small code example?
+
+---
+
+### Backpressure in Node.js Streams
+
+What happens if a producer writes data to a Node.js stream faster than the consumer can read it? How does Node handle this, and how would you implement backpressure control in practice?
+
+---
+
+### Freezing the Event Loop Without Infinite Loops
+
+Can you write a small snippet of code in Node.js that makes the event loop appear 'frozen' even though no synchronous infinite loop is running?
+
+---
+
+### Template String Substitution in Node.js
+
+Suppose you have template strings stored in a file. The template variables are written in the same style as JavaScript template literals, for example: `"Hello ${name}, welcome to ${place}"`. At runtime, you need to load such a string and replace the variables with actual values provided in an object or dictionary.
+
+How would you implement this substitution mechanism? Can you discuss both a safe/simple approach and whether JavaScript offers any native support for evaluating these template variables dynamically?
+
+---
+
+### finally Block and Response Delay in Express
+
+In your Express.js API, you have a route handler with this structure:
+
+```jsx
+app.get('/api/data', async (req, res) => {
+  try {
+    const result = await processData();
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json({ error: 'Failed' });
+  } finally {
+    await insertToDatabase1();
+    await insertToDatabase2();
+  }
+});
+
+```
+
+Will the database operations in the `finally` block delay the response being sent to the client? Why or why not?
+
+- *Follow up if answer is yes: How can you prevent that blocking.*
+    
+    
+
+---
+
+### Async Timeout and Cancellation in Node.js
+
+Suppose you’re working in Node.js, and you need to enforce a timeout on any asynchronous method call - even if that method comes from a third-party library where you don’t have access to the source code. How would you design a solution so that the async operation either completes within the timeout or fails with an error? Can you also discuss approaches for when the underlying library does or does not support cancellation?
+
+---
+
+### Implementing a Countdown Latch in JavaScript
+
+In multithreaded environments like Java, a **Countdown Latch** is a synchronization aid that allows one or more threads to wait until a set of operations complete.
+
+How would you implement a **simple countdown latch** in JavaScript/Node.js (which is single-threaded but has async concurrency)? Show how your implementation could be used to wait for multiple async operations before proceeding.
+
+---
+
+### Running Async Tasks with Concurrency Limits
+
+You have an array of 1000 async tasks (functions returning Promises). If you just call `Promise.all`, you might overwhelm the system. How would you implement a function to run these tasks with a maximum concurrency limit of, say, 5 at a time?
+
+---
+
+### Behavior of Array.from with Async Functions
+
+You’re given the following Node.js code:
+
+```jsx
+const tasks = Array.from({ length: 1000 }, (_, i) => async () => {
+  await new Promise(r => setTimeout(r, 100)); // simulate async work
+  return i;
+});
+```
+
+- After this line executes, what exactly is stored in `tasks`?
+- Does the construction of the array wait for the `setTimeout` promises to resolve before completing?
+- How would the behavior change if the code were instead written as:
+
+```jsx
+const tasks = Array.from({ length: 1000 }, async (_, i) => {
+  await new Promise(r => setTimeout(r, 100));
+  return i;
+});
+```
+
+---
+
+### Custom Mutex Implementation in Node.js
+
+In Node.js, multiple asynchronous functions may try to access or modify shared resources at the same time. How would you design and implement a simple mutex (mutual exclusion lock) to ensure that only one function can execute a critical section at a time? Please provide a code example.
+
+---
+
+### Finding the Largest Array in a Nested JSON Object
+
+You are given a JSON object of arbitrary shape. This object can contain nested objects and arrays at any depth.
+
+Write a function in JavaScript/Node.js that:
+
+1. Recursively traverses the JSON object.
+2. Identifies the array with the **largest number of immediate children** (not counting nested arrays within those children).
+3. Returns both the **array itself** and the **key under which it is stored**.
+
+Your function should work for deeply nested JSON objects, not just top-level arrays.
+
+---
+
+### Finding Path to Target Value in a Nested JSON Object
+
+You are given a JSON object of arbitrary shape and a **target value**.
+
+Write a function in JavaScript/Node.js that:
+
+1. Recursively searches the object.
+2. Returns the **path of keys** that leads to the first occurrence of the target value.
+3. If the value does not exist, return `null`.
+
+> For example, given `{ a: { b: { c: 42 } } }` and target `42`, the function should return `["a", "b", "c"]`.
+> 
+
+---
+
+### One-Liner Function to Chunk an Array
+
+You are given an array of items and a batch size. Write a function in **JavaScript/Node.js** that splits the array into smaller arrays ("batches"), each of the given batch size.
+
+1. The function must be written as a one-liner.
+2. You can skip handling for nulls.
+
+Example:
+
+```jsx
+chunkArray([1, 2, 3, 4, 5, 6, 7], 3);
+// Expected output: [[1,2,3], [4,5,6], [7]]
+```
+
+---
+
+### Filtering Array of Objects by Matching URLs
+
+You are given two arrays of objects in Node.js:
+
+1. The first array (`arr1`) contains objects with `title` and `url`.
+2. The second array (`arr2`) contains objects with `title`, `url`, and `content`.
+
+Write a function that filters `arr2` so that it only contains the objects whose `url` is also present in `arr1`.
+
+Example Input:
+
+```jsx
+const arr1 = [
+  { title: "First", url: "<https://a.com>" },
+  { title: "Second", url: "<https://b.com>" }
+];
+
+const arr2 = [
+  { title: "First", url: "<https://a.com>", content: "Content A" },
+  { title: "Third", url: "<https://c.com>", content: "Content C" },
+  { title: "Second", url: "<https://b.com>", content: "Content B" }
+];
+```
+
+**Expected Output:**
+
+```jsx
+[
+  { title: "First", url: "<https://a.com>", content: "Content A" },
+  { title: "Second", url: "<https://b.com>", content: "Content B" }
+]
+```
