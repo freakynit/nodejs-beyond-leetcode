@@ -246,7 +246,7 @@ const arr2 = [
 
 ---
 
-### Data masking and unmasking
+### Data Masking and Unmasking
 
 Write a function in Node.js that:
 1. Takes a buffer of data and a 4-byte masking key.
@@ -257,3 +257,28 @@ Write a function in Node.js that:
 Follow-up question:
 1. Suppose instead of masking byte-by-byte, you want to optimize the process by applying the mask in 32-bit chunks. How would you do that?
 2. This implementation should properly handle trailing bytes if the data length is not a multiple of 4.
+
+---
+
+### Handling Uncaught Exceptions in Async Code
+
+In a Node.js application, uncaught exceptions in synchronous code can crash the process, but async code behaves differently. Explain how Node.js handles unhandled promise rejections, and provide a code example showing how to implement a global handler that logs errors without crashing the server.
+
+---
+
+### Graceful Shutdown in Node.js with In-Flight Requests
+
+When running a Node.js server (using Express maybe), how would you implement a graceful shutdown so that:
+
+1. New requests stop being accepted once a shutdown signal (SIGTERM) is received.
+2. Existing in-flight requests are allowed to finish.
+3. Any open database or message queue connections are properly closed.
+
+Provide a minimal code example to demonstrate the implementation for this.
+
+---
+
+### Caching Strategies for Dynamic Routes
+
+In an Express app with dynamic routes (e.g., /user/:id), you want to cache responses to reduce database load, but only for frequently accessed IDs. How would you implement an in-memory cache, with TTL expiration, a few eviction policies and cache invalidation on updates.
+
