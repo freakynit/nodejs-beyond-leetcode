@@ -282,3 +282,81 @@ Provide a minimal code example to demonstrate the implementation for this.
 
 In an Express app with dynamic routes (e.g., /user/:id), you want to cache responses to reduce database load, but only for frequently accessed IDs. How would you implement an in-memory cache, with TTL expiration, a few eviction policies and cache invalidation on updates.
 
+---
+
+### Debounced Function with Cancellation and Edge Invocation
+
+Imagine you're implementing a `search-as-you-type` feature in Node.js (for example, querying a database or triggering webhooks). To avoid flooding the system with unnecessary requests, you decide to use `debouncing`.
+
+Part 1:
+-------
+
+1. What is `debouncing`?
+2. Why is it useful, and in what scenarios would debouncing be an appropriate choice?
+
+
+Part 2:
+-------
+
+Implement a utility function `debounceWithCancellation<T>()` that wraps an asynchronous function. The requirements are:
+
+- Input: an async function `(...args) => T`.
+- Output: a wrapped function that: Can be called as `(...args) => Promise<T>` and provides a `.cancel()` method to discard any pending invocation/request.
+
+Part 3:
+-------
+
+Enhance your implementation to support the following options:
+
+1. `Trailing invocation` - Ensure the last call is eventually executed after the debounce delay (default behavior in many debounce utilities).
+2. `Leading invocation` - Optionally allow immediate execution on the first call, then suppress further calls until the delay has passed.
+3. `Configurable delay` - Allow the debounce delay to be set via an options object.
+
+Updated function signature:
+
+```
+debounceWithCancellation<T>(
+  fn: (...args: any[]) => Promise<T>,
+  options: { leading?: boolean; trailing?: boolean; delay: number }
+): ((...args: any[]) => Promise<T>) & { cancel: () => void }
+```
+
+---
+
+### API Retry Utility
+
+Design a `retry()` helper for external API calls that may fail with:
+
+- `Retryable`: `429 Too Many Requests`, transient `5xx`, or network errors
+- `Non-retryable`: All other `4xx`
+
+The function should:
+
+1. Accept: `asyncFn`, `maxRetries`, `backoffStrategy` (`linear`, `exponential`), and optional `jitter` value.
+2. Logic:
+  - No retries on `4xx` (except `429`)
+  - Retry all `5xx`
+  - For `429`, respect `Retry-After` if present, otherwise use `backoffStrategy`
+3. Add `jitter` if given.
+4. Support cancellation via `AbortSignal`
+
+---
+
+### Database Connection Pool
+
+Design a `ConnectionPool` utility for managing database connections.
+
+1. Maintain a fixed `maxConnections`
+2. Reuse idle connections when available
+2. Queue requests if the pool is exhausted
+
+Timeouts:
+
+1. `Connection timeout` – fail if a new connection can't be established in time
+2. `Acquire timeout` – fail if a connection can’t be checked out from the pool in time
+3. `Idle timeout` – close connections left unused for too long
+
+Also:
+
+1. Support `release()` to return a connection back to the pool
+2. Support `destroy()` to close all connections
