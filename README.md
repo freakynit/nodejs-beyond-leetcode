@@ -1,6 +1,6 @@
 # Real-World Node.js Interview Questions
 
-A collection of **interview questions** designed to test **practical, real-world engineering skills** in Node.js and JavaScript.
+A collection of **interview questions** (and self-practise questions) designed to test **practical, real-world engineering skills** in Node.js and JavaScript.
 
 These aren’t algorithm drills or textbook trivia - they’re based on challenges that actually show up when building and scaling systems.
 
@@ -42,6 +42,32 @@ The content of this repository is released under an open-source license. See the
 ---
 
 ## Questions
+
+- [Per-Email Request Serialization in Express](#per-email-request-serialization-in-express)
+- [Implementing a Mutex in Node.js with async/await](#implementing-a-mutex-in-nodejs-with-asyncawait)
+- [Race Conditions in a Single-Threaded Node.js Environment](#race-conditions-in-a-single-threaded-nodejs-environment)
+- [Backpressure in Node.js Streams](#backpressure-in-nodejs-streams)
+- [Freezing the Event Loop Without Infinite Loops](#freezing-the-event-loop-without-infinite-loops)
+- [Template String Substitution in Node.js](#template-string-substitution-in-nodejs)
+- [Finally Block and Response Delay in Express](#finally-block-and-response-delay-in-express)
+- [Async Timeout and Cancellation in Node.js](#async-timeout-and-cancellation-in-nodejs)
+- [Implementing a Countdown Latch in JavaScript](#implementing-a-countdown-latch-in-javascript)
+- [Running Async Tasks with Concurrency Limits](#running-async-tasks-with-concurrency-limits)
+- [Behavior of Array.from with Async Functions](#behavior-of-arrayfrom-with-async-functions)
+- [Custom Mutex Implementation in Node.js](#custom-mutex-implementation-in-nodejs)
+- [Finding the Largest Array in a Nested JSON Object](#finding-the-largest-array-in-a-nested-json-object)
+- [Finding Path to Target Value in a Nested JSON Object](#finding-path-to-target-value-in-a-nested-json-object)
+- [One-Liner Function to Chunk an Array](#one-liner-function-to-chunk-an-array)
+- [Filtering Array of Objects by Matching URLs](#filtering-array-of-objects-by-matching-urls)
+- [Data Masking and Unmasking](#data-masking-and-unmasking)
+- [Handling Uncaught Exceptions in Async Code](#handling-uncaught-exceptions-in-async-code)
+- [Graceful Shutdown in Node.js with In-Flight Requests](#graceful-shutdown-in-nodejs-with-in-flight-requests)
+- [Caching Strategies for Dynamic Routes](#caching-strategies-for-dynamic-routes)
+- [Debounced Function with Cancellation and Edge Invocation](#debounced-function-with-cancellation-and-edge-invocation)
+- [API Retry Utility](#api-retry-utility)
+- [Database Connection Pool](#database-connection-pool)
+
+---
 
 ### Per-Email Request Serialization in Express
 
@@ -89,7 +115,7 @@ How would you implement this substitution mechanism? Can you discuss both a safe
 
 ---
 
-### finally Block and Response Delay in Express
+### Finally Block and Response Delay in Express
 
 In your Express.js API, you have a route handler with this structure:
 
@@ -288,23 +314,20 @@ In an Express app with dynamic routes (e.g., /user/:id), you want to cache respo
 
 Imagine you're implementing a `search-as-you-type` feature in Node.js (for example, querying a database or triggering webhooks). To avoid flooding the system with unnecessary requests, you decide to use `debouncing`.
 
-Part 1:
--------
+**Part 1:**
 
 1. What is `debouncing`?
 2. Why is it useful, and in what scenarios would debouncing be an appropriate choice?
 
 
-Part 2:
--------
+**Part 2:**
 
 Implement a utility function `debounceWithCancellation<T>()` that wraps an asynchronous function. The requirements are:
 
 - Input: an async function `(...args) => T`.
 - Output: a wrapped function that: Can be called as `(...args) => Promise<T>` and provides a `.cancel()` method to discard any pending invocation/request.
 
-Part 3:
--------
+**Part 3:**
 
 Enhance your implementation to support the following options:
 
