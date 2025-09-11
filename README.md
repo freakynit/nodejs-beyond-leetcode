@@ -243,3 +243,17 @@ const arr2 = [
   { title: "Second", url: "<https://b.com>", content: "Content B" }
 ]
 ```
+
+---
+
+### Data masking and unmasking
+
+Write a function in Node.js that:
+1. Takes a buffer of data and a 4-byte masking key.
+2. Returns a masked version of the data using XOR. Maksing should happen byte-by-byte
+3. Then, demonstrate unmasking the same.
+4. Why XOR and what are the benefits of masking like this?
+
+Follow-up question:
+1. Suppose instead of masking byte-by-byte, you want to optimize the process by applying the mask in 32-bit chunks. How would you do that?
+2. This implementation should properly handle trailing bytes if the data length is not a multiple of 4.
