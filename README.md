@@ -383,3 +383,52 @@ Also:
 
 1. Support `release()` to return a connection back to the pool
 2. Support `destroy()` to close all connections
+
+---
+
+### Bucketize Time-Series Data by Multiple Interval Sizes
+
+You are given an array of objects. Each object has:
+
+1. a `timestamp` in ISO-8601 string format, and
+2. a `data` field (which can hold any value, even complex objects).
+
+You are also given an array of interval sizes (in seconds).
+
+Write a function that takes such an array of objects and the array of interval sizes, and for each interval size, groups the objects into consecutive time buckets of that size.
+
+1. Each bucket represents a time range based on the interval size.
+2. The bucket "key" can be represented as the starting timestamp of that bucket (in epoch seconds, or ISO-8601).
+3. If multiple objects fall into the same bucket, all of them should be grouped together under that bucket.
+4. The function should return an object (or map) where keys are interval sizes, and values are the bucketized results for that interval size.
+
+Example Input and Output:
+
+Input:
+
+```javascript
+const items = [
+  { data: "A", timestamp: "2025-09-13T12:00:01Z" },
+  { data: "B", timestamp: "2025-09-13T12:00:04Z" },
+  { data: "C", timestamp: "2025-09-13T12:00:08Z" },
+  { data: "D", timestamp: "2025-09-13T12:00:12Z" }
+];
+
+const intervals = [5, 10];
+```
+
+Output:
+
+```javascript
+{
+  5: {
+    "2025-09-13T12:00:00Z": [{data:"A"}, {data:"B"}],
+    "2025-09-13T12:00:05Z": [{data:"C"}],
+    "2025-09-13T12:00:10Z": [{data:"D"}]
+  },
+  10: {
+    "2025-09-13T12:00:00Z": [{data:"A"}, {data:"B"}, {data:"C"}],
+    "2025-09-13T12:00:10Z": [{data:"D"}]
+  }
+}
+```
