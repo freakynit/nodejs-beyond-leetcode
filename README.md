@@ -67,6 +67,9 @@ The content of this repository is released under an open-source license. See the
 - [API Retry Utility](#api-retry-utility)
 - [Database Connection Pool](#database-connection-pool)
 - [Bucketize Time-Series Data by Multiple Interval Sizes](#bucketize-time-series-data-by-multiple-interval-sizes)
+- [Lazy vs. Eager Evaluation in Async Iterators](#lazy-vs-eager-evaluation-in-async-iterators)
+- [Task Queue with Delayed and Scheduled Jobs](#task-queue-with-delayed-and-scheduled-jobs)
+- [A Simple Dependency Injection (DI) container](#a-simple-dependency-injection-di-container)
 
 ---
 
@@ -431,5 +434,41 @@ Output:
     "2025-09-13T12:00:00Z": [{data:"A"}, {data:"B"}, {data:"C"}],
     "2025-09-13T12:00:10Z": [{data:"D"}]
   }
+}
+```
+
+---
+
+### Lazy vs. Eager Evaluation in Async Iterators
+
+When working with async iterators, what is the difference between `lazy evaluation` and `eager evaluation`? Can you illustrate with an example where lazy evaluation is more efficient than eager evaluation?
+
+---
+
+
+### Task Queue with Delayed and Scheduled Jobs
+
+Design and implement a small task-queue system that supports:
+
+1. Enqueuing immediate jobs.
+2. Enqueuing delayed jobs (run once after a delay).
+3. Enqueuing scheduled/recurring jobs (cron-style).
+4. Reliable processing with retries and exponential backoff.
+5. Graceful worker shutdown.
+6. At-least-once delivery semantics (job may run more than once on failure).
+7. Simple job deduplication to prevent identical jobs from being queued repeatedly.
+
+---
+
+### A Simple Dependency Injection (DI) container
+
+Design a simple Dependency Injection (DI) container that supports `singleton` and `transient` lifetimes.
+
+Your container should implement at least these two methods:
+
+```ts
+class Container {
+  register(name: string, factory: (c: Container) => any, options?: { singleton?: boolean }): void;
+  resolve<T = any>(name: string): T;
 }
 ```
