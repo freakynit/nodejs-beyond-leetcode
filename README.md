@@ -66,6 +66,7 @@ The content of this repository is released under an open-source license. See the
 - [Debounced Function with Cancellation and Edge Invocation](#debounced-function-with-cancellation-and-edge-invocation)
 - [API Retry Utility](#api-retry-utility)
 - [Database Connection Pool](#database-connection-pool)
+- [Bucketize Time-Series Data by Multiple Interval Sizes](#bucketize-time-series-data-by-multiple-interval-sizes)
 
 ---
 
