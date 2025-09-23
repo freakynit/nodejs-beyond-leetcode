@@ -70,6 +70,7 @@ The content of this repository is released under an open-source license. See the
 - [Lazy vs. Eager Evaluation in Async Iterators](#lazy-vs-eager-evaluation-in-async-iterators)
 - [Task Queue with Delayed and Scheduled Jobs](#task-queue-with-delayed-and-scheduled-jobs)
 - [A Simple Dependency Injection (DI) container](#a-simple-dependency-injection-di-container)
+- [Result-Aware Concurrent Calls De-duper](#result-aware-concurrent-calls-de-duper)
 
 ---
 
@@ -445,7 +446,6 @@ When working with async iterators, what is the difference between `lazy evaluati
 
 ---
 
-
 ### Task Queue with Delayed and Scheduled Jobs
 
 Design and implement a small task-queue system that supports:
@@ -472,3 +472,39 @@ class Container {
   resolve<T = any>(name: string): T;
 }
 ```
+
+---
+
+### Result-Aware Concurrent Calls De-duper
+
+Implement a function in Node.js such that if one async operation is already running, any subsequent call to the same function should wait for the first operation to complete and then return the same result.
+
+Example:
+
+```js
+async function fetchData() {
+  // Assume this takes time
+  return new Promise(resolve => {
+    setTimeout(() => resolve(Math.random()), 2000);
+  });
+}
+```
+
+Now, you need to wrap `fetchData` so that:
+
+- The first call starts the operation.
+- Any concurrent calls (while the operation is in progress) do not trigger a new fetch but instead `wait` for the first one to finish and get the same result.
+
+**Implement a function `onceAtATime(fn)` that enforces this behavior**. 
+
+Example usage:
+
+```js
+const wrappedFetch = onceAtATime(fetchData);
+
+wrappedFetch().then(console.log); // Starts operation
+wrappedFetch().then(console.log); // Waits for first call
+wrappedFetch().then(console.log); // Waits for first call
+```
+
+All three calls above should print the **same value** after \~2 seconds, not trigger 3 separate fetches.
