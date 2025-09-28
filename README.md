@@ -71,6 +71,7 @@ The content of this repository is released under an open-source license. See the
 - [Task Queue with Delayed and Scheduled Jobs](#task-queue-with-delayed-and-scheduled-jobs)
 - [A Simple Dependency Injection (DI) container](#a-simple-dependency-injection-di-container)
 - [Result-Aware Concurrent Calls De-duper](#result-aware-concurrent-calls-de-duper)
+- [Tile-Matching Storage Puzzle](#tile-matching-storage-puzzle)
 
 ---
 
