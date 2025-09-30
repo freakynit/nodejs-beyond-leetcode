@@ -71,6 +71,7 @@ The content of this repository is released under an open-source license. See the
 - [Task Queue with Delayed and Scheduled Jobs](#task-queue-with-delayed-and-scheduled-jobs)
 - [A Simple Dependency Injection (DI) container](#a-simple-dependency-injection-di-container)
 - [Result-Aware Concurrent Calls De-duper](#result-aware-concurrent-calls-de-duper)
+- [DeepCopy Implementation](#deepcopy-implementation)
 
 ---
 
@@ -509,3 +510,16 @@ wrappedFetch().then(console.log); // Waits for first call
 
 All three calls above should print the **same value** after \~2 seconds, not trigger 3 separate fetches.
 
+---
+
+### DeepCopy Implementation
+
+You are given a JavaScript object that may contain nested objects and arrays and any other valid native javascript type.
+
+Write a function in Node.js to deep copy the object without using any external libraries.
+
+Your solution should:
+
+- Correctly handle nested objects and arrays.
+- Not mutate the original object.
+- Work for different data types (numbers, strings, booleans, `null`, arrays, objects).
