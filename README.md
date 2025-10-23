@@ -73,6 +73,7 @@ The content of this repository is released under an open-source license. See the
 - [Result-Aware Concurrent Calls De-duper](#result-aware-concurrent-calls-de-duper)
 - [DeepCopy Implementation](#deepcopy-implementation)
 - [Abortable Sleep Function](#abortable-sleep-function)
+- [Deduplicate Objects by Key While Keeping the Highest Priority Value](#deduplicate-objects-by-key-while-keeping-the-highest-priority-value)
 
 ---
 
@@ -553,3 +554,32 @@ Aborted: The operation was aborted
 
 **Follow-up**: In what real-world scenarios would this be useful?
 
+---
+
+### Deduplicate Objects by Key While Keeping the Highest Priority Value
+
+You’re given an array of objects, each representing a **product review** with a `product` name and a `rating` level (`'low'`, `'medium'`, or `'high'`).
+Write a function in Node.js that removes duplicates by `product`, keeping only the review with the **highest rating** for each product.
+Return the resulting array.
+
+Example Input:
+
+```js
+const reviews = [
+  { product: 'Laptop', rating: 'medium' },
+  { product: 'Phone', rating: 'low' },
+  { product: 'Laptop', rating: 'high' },
+  { product: 'Headphones', rating: 'medium' },
+  { product: 'Phone', rating: 'high' }
+];
+```
+
+Expected Output:
+
+```js
+[
+  { product: 'Laptop', rating: 'high' },
+  { product: 'Phone', rating: 'high' },
+  { product: 'Headphones', rating: 'medium' }
+]
+```
