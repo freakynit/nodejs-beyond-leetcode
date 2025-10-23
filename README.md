@@ -72,6 +72,7 @@ The content of this repository is released under an open-source license. See the
 - [A Simple Dependency Injection (DI) container](#a-simple-dependency-injection-di-container)
 - [Result-Aware Concurrent Calls De-duper](#result-aware-concurrent-calls-de-duper)
 - [DeepCopy Implementation](#deepcopy-implementation)
+- [Abortable Sleep Function](#abortable-sleep-function)
 
 ---
 
@@ -523,3 +524,32 @@ Your solution should:
 - Correctly handle nested objects and arrays.
 - Not mutate the original object.
 - Work for different data types (numbers, strings, booleans, `null`, arrays, objects).
+
+---
+
+### Abortable Sleep Function
+
+Implement a function `abortAwareSleep(ms, signal)` that:
+
+- Returns a Promise which resolves after ms milliseconds.
+- Rejects immediately if the provided AbortSignal is already aborted.
+- Rejects with an error if the signal is aborted while waiting.
+
+Example Usage:
+```javascript
+const controller = new AbortController();
+
+abortAwareSleep(5000, controller.signal)
+  .then(() => console.log('Slept for 5 seconds'))
+  .catch(err => console.error('Aborted:', err.message));
+
+setTimeout(() => controller.abort(), 2000);
+```
+
+Expected Output:
+```bash
+Aborted: The operation was aborted
+```
+
+**Follow-up**: In what real-world scenarios would this be useful?
+
